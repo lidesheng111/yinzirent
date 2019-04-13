@@ -20,6 +20,7 @@ export default {
   },
 
   mounted() {
+    this.$store.dispatch('retrieveMonthlyTotals');
   },
 
   methods: {

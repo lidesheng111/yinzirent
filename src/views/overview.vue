@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div>
-      <div>本月收入：{{monthlyIncome}}</div>
-      <div>今年截止本月总收入：{{totalOfThisYear}}</div>
-      <div>总支出：</div>
-    </div>
-
+    <income />
     <div class="rooms">
       <div class="room-box" v-for="room in rooms" :key="room.id">
         <div>房间号：{{room.rNumber}}</div>
@@ -58,37 +53,15 @@
 
 <script>
 var BaaS = require("minapp-sdk");
+import Income from '../components/Income.vue';
 
 export default {
   components: {
+    Income
   },
   data() {
     return {
-      monthlyIncome: 0,
-      totalOfThisYear: 0,
-      rooms: [
-        // {
-        //   rNumber: 101,
-        //   available: false,
-        //   beginTime: '2019-04-10',
-        //   guestsName: ["边巴", "次仁卓嘎"],
-        //   rate: 750,
-        //   eCharge: 1,
-        //   eStart: 630,
-        //   waterCharge: 10,
-        //   wasteCharge: 10,
-        //   eBike: 30,
-        //   eLast: 1500,
-        //   rentPaid: false,
-        //   waterPaid: false,
-        //   wastePaid: false,
-        //   eBikePaid: false,
-        //   ePaid: false,
-        // },
-        // {
-      ],
-      cYear: new Date().getFullYear(),
-      cMonth: new Date().getMonth() + 1
+      rooms: [],
     };
   },
 
@@ -104,6 +77,14 @@ export default {
         console.log(err);
       }
     );
+
+    console.log(this.$store);
+    let i = 1;
+    // setInterval( () => {
+    //   this.$store.commit('updateCount', i++)
+    // }, 1000);
+
+    // this.$store.dispatch('retrieveMonthlyTotals');
   },
 
   methods: {
@@ -113,22 +94,23 @@ export default {
       return table;
     },
     addRate(rNumber, fee) {
-      let query = new BaaS.Query();
-      let month = String(this.cMonth);
-      query.compare("month", "=", month);
-      let myTable = this._getTable();
-      let myReocrd = myTable.getWithoutData("5cadc633fb9d7f34f1d52090");
-      myReocrd.set({
-        rateArr: 200
-      });
-      myReocrd.update().then(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      // let query = new BaaS.Query();
+      // let month = String(this.cMonth);
+      // query.compare("month", "=", month);
+      // let myTable = this._getTable();
+      // let myReocrd = myTable.getWithoutData("5cadc633fb9d7f34f1d52090");
+      // myReocrd.set({
+      //   rateArr: 200
+      // });
+      // myReocrd.update().then(
+      //   res => {
+      //     console.log(res);
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   }
+      // );
+      this.$store.dispatch("updateRateTotal", fee);
     },
     addWater(fee) {},
     addWaste(fee) {},
