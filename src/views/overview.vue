@@ -31,19 +31,19 @@
           </div>
           <div>
             <span class="paid-item">{{room.waterPaid==false?'水费未交':'已交水费'}}</span>
-            <a-button v-if="!room.waterPaid" type="primary" size="small" @click="addRate(room.rNumber, room.rate)">已交</a-button>
+            <a-button v-if="!room.waterPaid" type="primary" size="small" @click="addRate(room._id, room.water)">已交</a-button>
           </div>
           <div>
             <span class="paid-item">{{room.wastePaid==false?'垃圾费未交':'已交垃圾费'}}</span>
-            <a-button v-if="!room.wastePaid" type="primary" size="small" @click="addRate(room.rNumber, room.rate)">已交</a-button>
+            <a-button v-if="!room.wastePaid" type="primary" size="small" @click="addRate(room._id, room.waste)">已交</a-button>
           </div>
           <div>
             <span class="paid-item">{{room.ePaid==false?'电费未交':'已交电费'}}</span>
-            <a-button v-if="!room.ePaid" type="primary" size="small" @click="addRate(room.rNumber, room.rate)">已交</a-button>
+            <a-button v-if="!room.ePaid" type="primary" size="small" @click="addRate(room._id, room.e)">已交</a-button>
           </div>
           <div>
             <span class="paid-item">{{room.eBikePaid==false?'电瓶车费未交':'已交电瓶车'}}</span>
-            <a-button v-if="!room.eBikePaid" type="primary" size="small" @click="addRate(room.rNumber, room.rate)">已交</a-button>
+            <a-button v-if="!room.eBikePaid" type="primary" size="small" @click="addRate(room._id, room.ebike)">已交</a-button>
           </div>
         </div>
       </div>
@@ -76,12 +76,24 @@ export default {
   methods: {
     addRate(_id, toAdd) {
       this.$store.dispatch("updateRateTotal", this.$store.state.rateTotal + toAdd);
-      this.$store.dispatch("updateRentPaid", _id)
+      this.$store.dispatch("updateRentPaid", _id);
     },
-    addWater(fee) {},
-    addWaste(fee) {},
-    addE(fee) {},
-    addEBike(fee) {}
+    addWater(_id, toAdd) {
+      this.$store.dispatch("updateWaterTotal", this.$store.state.waterTotal + toAdd);
+      this.$store.dispatch("updateWaterPaid", _id);
+    },
+    addWaste(_id, toAdd) {
+      this.$store.dispatch("updateWasteTotal", this.$store.state.wasteTotal + toAdd);
+      this.$store.dispatch("updateWastePaid", _id);
+    },
+    addE(_id, toAdd) {
+      this.$store.dispatch("updateETotal", this.$store.state.ETotal + toAdd);
+      this.$store.dispatch("updateEPaid", _id);
+    },
+    addEBike(_id, toAdd) {
+      this.$store.dispatch("updateEBikeTotal", this.$store.state.EBikeTotal + toAdd);
+      this.$store.dispatch("updateEBikePaid", _id);
+    }
   }
 };
 </script>
