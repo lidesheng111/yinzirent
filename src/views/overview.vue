@@ -80,11 +80,6 @@ export default {
 
     console.log(this.$store);
     let i = 1;
-    // setInterval( () => {
-    //   this.$store.commit('updateCount', i++)
-    // }, 1000);
-
-    // this.$store.dispatch('retrieveMonthlyTotals');
   },
 
   methods: {
@@ -94,22 +89,6 @@ export default {
       return table;
     },
     addRate(rNumber, fee) {
-      // let query = new BaaS.Query();
-      // let month = String(this.cMonth);
-      // query.compare("month", "=", month);
-      // let myTable = this._getTable();
-      // let myReocrd = myTable.getWithoutData("5cadc633fb9d7f34f1d52090");
-      // myReocrd.set({
-      //   rateArr: 200
-      // });
-      // myReocrd.update().then(
-      //   res => {
-      //     console.log(res);
-      //   },
-      //   err => {
-      //     console.log(err);
-      //   }
-      // );
       this.$store.dispatch("updateRateTotal", fee);
     },
     addWater(fee) {},
