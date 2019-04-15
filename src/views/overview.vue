@@ -27,7 +27,7 @@
         <div class="paid-box gap">
           <div>
             <span class="paid-item">{{room.rentPaid==false?'未交房租':'已交房租'}}</span>
-            <a-button v-if="!room.rentPaid" type="primary" size="small" @click="addRate(room.rNumber, room.rate)">已交</a-button>
+            <a-button v-if="!room.rentPaid" type="primary" size="small" @click="addRate(room._id, room.rate)">已交</a-button>
           </div>
           <div>
             <span class="paid-item">{{room.waterPaid==false?'水费未交':'已交水费'}}</span>
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-var BaaS = require("minapp-sdk");
 import Income from '../components/Income.vue';
 
 export default {
@@ -61,35 +60,23 @@ export default {
   },
   data() {
     return {
-      rooms: [],
     };
   },
 
   mounted() {
-    BaaS.init("9b6f2104a25b4d4bce8a");
-    let Rooms = new BaaS.TableObject("rooms");
-    Rooms.get("").then(
-      res => {
-        console.log(res);
-        this.rooms = res.data.objects;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.$store.dispatch("retrieveRooms");
+  },
 
-    console.log(this.$store);
-    let i = 1;
+  computed: {
+    rooms() {
+      return this.$store.state.rooms
+    }
   },
 
   methods: {
-    _getTable() {
-      let table = new BaaS.TableObject("year2019");
-      console.log(table, "table");
-      return table;
-    },
-    addRate(rNumber, fee) {
-      this.$store.dispatch("updateRateTotal", fee);
+    addRate(_id, toAdd) {
+      this.$store.dispatch("updateRateTotal", this.$store.state.rateTotal + toAdd);
+      this.$store.dispatch("updateRentPaid", _id)
     },
     addWater(fee) {},
     addWaste(fee) {},

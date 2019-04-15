@@ -1,8 +1,5 @@
 export default {
-  count: 0,
-  firstName: 'Li',
-  lastName: 'Desheng',
-
+  rooms: [],
   rateTotal: 1,
   waterTotal: 1,
   wasteTotal: 1,

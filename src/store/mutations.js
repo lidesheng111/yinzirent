@@ -1,6 +1,6 @@
 export default {
-  updateCount(state, num) {
-    state.count = num;
+  getRooms(state, data) {
+    state.rooms = data;
   },
 
   setTotals(state, data) {
